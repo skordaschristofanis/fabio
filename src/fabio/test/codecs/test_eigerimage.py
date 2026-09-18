@@ -129,18 +129,15 @@ class TestEiger(_CommonTestFrames):
 
     def test_read_2d(self):
         """check we can read a 2D (single image, no frame axis) Eiger file"""
-        fn = os.path.join(UtilsTest.tempdir, "eiger2d.h5")
-        make_hdf5(fn, (99, 101))
+        fn = UtilsTest.getimage("CC105-DH_0001.h5.bz2")[:-4]
+        e = EigerImage()
         try:
-            e = EigerImage()
             e.read(fn)
-            self.assertEqual(e.shape, (99, 101))
+            self.assertEqual(e.shape, (3262, 3108))
             self.assertEqual(e.nframes, 1)
             self.assertIsNotNone(e.data)
         finally:
             e.close()
-            if os.path.exists(fn):
-                os.unlink(fn)
 
     def test_bug_479(self):
         fn = os.path.join(UtilsTest.tempdir, "eiger_479.h5")
