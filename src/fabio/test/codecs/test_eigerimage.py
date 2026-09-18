@@ -138,6 +138,7 @@ class TestEiger(_CommonTestFrames):
             self.assertEqual(e.nframes, 1)
             self.assertIsNotNone(e.data)
         finally:
+            e.close()
             if os.path.exists(fn):
                 os.unlink(fn)
 
